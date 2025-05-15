@@ -13,6 +13,7 @@ import 'package:gamelobby/helper/models/api/friendship.dart';
 import 'package:gamelobby/helper/models/api/lobby/lobby_information.dart';
 import 'package:gamelobby/helper/models/api/matches_service/matchedsearch.dart';
 import 'package:gamelobby/helper/models/signalr/friendshipInvitation_event.dart';
+import 'package:gamelobby/helper/models/signalr/friendstatus_event.dart';
 import 'package:gamelobby/helper/models/signalr/invitetolobby_event.dart';
 import 'package:gamelobby/helper/models/signalr/userdto.dart';
 import 'package:gamelobby/models/player.dart';
@@ -51,6 +52,8 @@ class SignalRService {
 
     lobby();
     invitetoLobby();
+
+    friendOnline();
   }
 
   /// SignalR bağlantısını başlat
@@ -65,6 +68,52 @@ class SignalRService {
         print("Bağlantı hatası: $e");
       }
     }
+  }
+
+  //Friends Change Online Status
+
+  void friendOnline() {
+    hubConnection.on("UserOnlineInfo", (arguments) {
+      if (arguments != null && arguments.isNotEmpty) {
+        log("Lobby UserOnlineInfo! ${arguments[0]}");
+        // Veri tipinin string olduğundan emin ol
+
+        try {
+          // JSON string'ini decode et
+          final String jsonString = jsonEncode(arguments[0]);
+          Map<String, dynamic> json = jsonDecode(jsonString);
+
+          // JSON verisini modele dönüştür
+          FriendstatusEvent response = FriendstatusEvent.fromJson(json);
+
+          AppLists.friendsList.value!
+              .firstWhere(
+                (element) => element.id == response.userID,
+              )
+              .isOnline = response.isOnline;
+
+          AppLists.onlinefriendsList.value = AppLists.friendsList.value!
+              .where(
+                (element) => element.isOnline == true,
+              )
+              .toList();
+
+          AppLists.offlinefriendsList.value = AppLists.friendsList.value!
+              .where(
+                (element) => element.isOnline == false,
+              )
+              .toList();
+
+          AppLists.offlinefriendsList.refresh();
+          AppLists.onlinefriendsList.refresh();
+          AppLists.friendsList.refresh();
+          log("----------------------");
+        } catch (e) {
+          // JSON çözme hatası durumunda logla
+          log("JSON çözme hatası: ${e.toString()}");
+        }
+      }
+    });
   }
 
 //LOBBYLOBBYLOBBYLOBBYLOBBYLOBBYLOBBYLOBBYLOBBYLOBBYLOBBYLOBBY//
@@ -98,7 +147,7 @@ class SignalRService {
                 avatar:
                     "http://185.93.68.107/api/Documents/cd071d3d-b85e-4a4e-bf89-f411297b89d5/${element.avatarId}",
                 banner:
-                    "assets/images/banners/${math.Random().nextInt(5) + 1}.jpg",
+                    "assets/images/banners/${math.Random().nextInt(5) + 1}.png",
               ),
             );
           }
@@ -244,37 +293,6 @@ class SignalRService {
       }
     });
   }
-
-  /// Server'dan mesaj alma
-  // void invitetoLobby() {
-  //   hubConnection.on("InvitationFriendship", (arguments) {
-  //     if (arguments != null && arguments.isNotEmpty) {
-  //       try {
-  //         final String jsonString = jsonEncode(arguments[0]);
-  //         Map<String, dynamic> json = jsonDecode(jsonString);
-
-  //         FriendshipInvitationEvent aa =
-  //             FriendshipInvitationEvent.fromJson(json);
-
-  //         AppLists.friendsInvitationList.value ??= [];
-  //         AppLists.friendsInvitationList.value!.add(
-  //           APIFriendinvitations(
-  //             id: aa.invitationID,
-  //             invitor: APIFriendship(
-  //               id: aa.sender.userId,
-  //               username: aa.sender.username,
-  //               avatarId: aa.sender.avatarId,
-  //               isOnline: aa.sender.isOnline,
-  //             ),
-  //           ),
-  //         );
-  //         AppLists.friendsInvitationList.refresh();
-  //       } catch (e) {
-  //         log(e.toString());
-  //       }
-  //     }
-  //   });
-  // }
 
   /// Server'dan mesaj alma
   void invitationFriendship() {

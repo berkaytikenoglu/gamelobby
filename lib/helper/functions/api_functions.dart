@@ -99,6 +99,14 @@ class ApiFunctions {
     return true;
   }
 
+  static Future<bool> matchStopSearch() async {
+    APIService api = APIService.instance;
+
+    bool response = await api.matchStopSearch();
+
+    return response;
+  }
+
   static Future<bool> lobbyquit() async {
     APIService api = APIService.instance;
 

@@ -20,26 +20,34 @@ class LoadingView extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
                   decoration: BoxDecoration(
+                    color: Colors.black,
                     gradient: RadialGradient(
                       colors: [
-                        Colors.black,
-                        Colors.black,
                         Colors.grey,
+                        Colors.black,
+                        Colors.black,
                       ],
                       center: Alignment.center, // merkezden başlayacak
                       radius: 0.8, // ne kadar genişleyeceği
                       stops: [0.0, 0.5, 1.0], // renklerin konumu (isteğe bağlı)
                     ),
                   ),
+                  // child: Obx(
+                  //   () => Image.asset(
+                  //     controller
+                  //         .storyimagelist[controller.storyimageIndex.value],
+                  //     fit: BoxFit.cover,
+                  //   ),
+                  // ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(90.0),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
-                    child: Image.asset(
-                      "assets/images/loading/2.jpg",
-                      fit: BoxFit.cover,
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  child: Obx(
+                    () => Image.asset(
+                      controller
+                          .storyimagelist[controller.storyimageIndex.value],
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),
@@ -68,7 +76,11 @@ class LoadingView extends StatelessWidget {
                   ),
                 ),
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    if (controller.storyimageIndex > 0) {
+                      controller.storyimageIndex--;
+                    }
+                  },
                   child: Center(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -104,7 +116,11 @@ class LoadingView extends StatelessWidget {
                   ),
                 ),
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    if (controller.storyimageIndex < 7) {
+                      controller.storyimageIndex++;
+                    }
+                  },
                   child: Center(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -139,49 +155,49 @@ class LoadingView extends StatelessWidget {
               ),
             ),
 
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                decoration: BoxDecoration(
-                  boxShadow: [BoxShadow(blurRadius: 100)],
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.black45,
-                      Colors.black,
-                      Colors.black,
-                      Colors.black,
-                    ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
-                  borderRadius: BorderRadiusDirectional.only(
-                    topStart: Radius.circular(80),
-                    topEnd: Radius.circular(80),
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                    width: 300,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        shape: LinearBorder(),
-                        backgroundColor: Colors.transparent,
-                        shadowColor: Colors.black26,
-                      ),
-                      onPressed: () {},
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "Geç",
-                          style: TextStyle(fontSize: 38),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            // Align(
+            //   alignment: Alignment.bottomCenter,
+            //   child: Container(
+            //     decoration: BoxDecoration(
+            //       boxShadow: [BoxShadow(blurRadius: 100)],
+            //       gradient: LinearGradient(
+            //         colors: [
+            //           Colors.black45,
+            //           Colors.black,
+            //           Colors.black,
+            //           Colors.black,
+            //         ],
+            //         begin: Alignment.topCenter,
+            //         end: Alignment.bottomCenter,
+            //       ),
+            //       borderRadius: BorderRadiusDirectional.only(
+            //         topStart: Radius.circular(80),
+            //         topEnd: Radius.circular(80),
+            //       ),
+            //     ),
+            //     child: Padding(
+            //       padding: const EdgeInsets.all(8.0),
+            //       child: SizedBox(
+            //         width: 300,
+            //         child: ElevatedButton(
+            //           style: ElevatedButton.styleFrom(
+            //             shape: LinearBorder(),
+            //             backgroundColor: Colors.transparent,
+            //             shadowColor: Colors.black26,
+            //           ),
+            //           onPressed: () {},
+            //           child: Padding(
+            //             padding: const EdgeInsets.all(8.0),
+            //             child: Text(
+            //               "Geç",
+            //               style: TextStyle(fontSize: 38),
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
 
             // SizedBox(
             //   width: MediaQuery.of(context).size.width,

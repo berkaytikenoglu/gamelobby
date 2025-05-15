@@ -207,7 +207,7 @@ class Appbar {
                       pageChange(1);
                     },
                     child: Text(
-                      "PLAY",
+                      "OYNA",
                       style: TextStyle(
                         fontSize: 35,
                         color: selectedmenuIndex.value == 1

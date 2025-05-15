@@ -46,6 +46,7 @@ flutter:
     - assets/images/wallpapers/
     - assets/images/loading/
     - assets/images/keyboard/
+    - assets/images/story/
     - assets/sounds/
     - assets/sounds/musics/
     - assets/videos/

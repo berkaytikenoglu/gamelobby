@@ -65,10 +65,10 @@ class HomeView extends StatelessWidget {
                                 children: [
                                   InkWell(
                                     onTap: () {
-                                      function(1, "PLAY");
+                                      function(1, "OYNA");
                                     },
                                     child: Text(
-                                      "PLAY",
+                                      "OYNA",
                                       style: TextStyle(
                                         fontSize: 50,
                                         color: Colors.pink,

@@ -21,11 +21,11 @@ class AppLists {
   static Rxn<List<APIFriendinvitations>> lobbyInvitationList = Rxn();
 
   static List<String> backgroundImages = [
-    "assets/images/wallpapers/1.jpg",
-    "assets/images/wallpapers/2.jpg",
-    "assets/images/wallpapers/3.jpg",
-    "assets/images/wallpapers/4.jpg",
-    "assets/images/wallpapers/5.jpg",
+    "assets/images/wallpapers/1.png",
+    "assets/images/wallpapers/2.png",
+    "assets/images/wallpapers/3.png",
+    "assets/images/wallpapers/4.png",
+    "assets/images/wallpapers/5.png",
     "assets/images/wallpapers/6.jpg",
     "assets/images/wallpapers/7.jpg",
     "assets/images/wallpapers/8.jpg",

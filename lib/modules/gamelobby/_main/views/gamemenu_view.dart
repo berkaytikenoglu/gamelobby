@@ -497,8 +497,8 @@ class GamemenuView extends StatelessWidget {
                                               ),
                                               children: [
                                                 ...List.generate(
-                                                  AppLists.friendsList.value!
-                                                      .length,
+                                                  AppLists.onlinefriendsList
+                                                      .value!.length,
                                                   (index) {
                                                     return Padding(
                                                       padding:
@@ -557,7 +557,7 @@ class GamemenuView extends StatelessWidget {
                                                                     ? Row(
                                                                         children: [
                                                                           Text(
-                                                                            AppLists.friendsList.value![index].username,
+                                                                            AppLists.onlinefriendsList.value![index].username,
                                                                             style:
                                                                                 TextStyle(color: Colors.white),
                                                                           ),
@@ -566,12 +566,12 @@ class GamemenuView extends StatelessWidget {
                                                                                 5,
                                                                           ),
                                                                           Text(
-                                                                            AppLists.friendsList.value![index].isOnline
+                                                                            AppLists.onlinefriendsList.value![index].isOnline
                                                                                 ? "Online"
                                                                                 : "Offline",
                                                                             style:
                                                                                 TextStyle(
-                                                                              color: AppLists.friendsList.value![index].isOnline ? Colors.green : Colors.red,
+                                                                              color: AppLists.onlinefriendsList.value![index].isOnline ? Colors.green : Colors.red,
                                                                             ),
                                                                           ),
                                                                           IconButton(
@@ -579,12 +579,18 @@ class GamemenuView extends StatelessWidget {
                                                                                 () async {
                                                                               APIService api = APIService.instance;
 
-                                                                              bool? response = await api.deletefriend(userId: AppLists.friendsList.value![index].id);
+                                                                              bool? response = await api.deletefriend(userId: AppLists.onlinefriendsList.value![index].id);
                                                                               if (!response) {
                                                                                 return;
                                                                               }
-                                                                              AppLists.friendsList.value!.removeAt(index);
+
+                                                                              AppLists.friendsList.value!.removeWhere(
+                                                                                (element) => element == AppLists.onlinefriendsList.value![index],
+                                                                              );
                                                                               AppLists.friendsList.refresh();
+
+                                                                              AppLists.onlinefriendsList.value!.removeAt(index);
+                                                                              AppLists.onlinefriendsList.refresh();
                                                                             },
                                                                             icon:
                                                                                 Icon(Icons.delete),
@@ -714,6 +720,12 @@ class GamemenuView extends StatelessWidget {
                                                                               if (!response) {
                                                                                 return;
                                                                               }
+
+                                                                              AppLists.friendsList.value!.removeWhere(
+                                                                                (element) => element == AppLists.onlinefriendsList.value![index],
+                                                                              );
+                                                                              AppLists.friendsList.refresh();
+
                                                                               AppLists.offlinefriendsList.value!.removeAt(index);
                                                                               AppLists.offlinefriendsList.refresh();
                                                                             },

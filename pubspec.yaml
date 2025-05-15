@@ -1,0 +1,51 @@
+name: gamelobby
+description: "A new Flutter project."
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.6.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  get: ^4.7.2
+
+  # win32: ^5.11.0 # Windows Özel
+  window_manager: ^0.4.3
+  audioplayers: ^6.2.0
+
+  media_kit: ^1.1.11 # Primary package.
+  media_kit_video: ^1.2.5 # For video rendering.
+  media_kit_libs_video: ^1.0.5 # Native video dependencies.
+
+  signalr_netcore: ^1.4.1
+  record: ^5.2.1
+
+  # pcmtowave: ^0.0.1
+  url_launcher: ^6.2.5
+
+  cached_network_image: ^3.4.1
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^5.0.0
+
+
+flutter:
+
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/images/banners/
+    - assets/images/logos/
+    - assets/images/wallpapers/
+    - assets/images/loading/
+    - assets/images/keyboard/
+    - assets/sounds/
+    - assets/sounds/musics/
+    - assets/videos/

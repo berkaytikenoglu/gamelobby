@@ -137,7 +137,7 @@ class GamemenuView extends StatelessWidget {
               () => AnimatedContainer(
                 duration: Duration(milliseconds: 1000), // Animasyon süresi
                 child: Positioned(
-                  right: controller.hoveredfriends.value == true ? 0 : 0,
+                  right: controller.hoveredfriends.value == true ? 0 : -225,
                   width: controller.hoveredfriends.value == true ? 250 : 250,
                   top: 50,
                   bottom: 0,
@@ -251,19 +251,8 @@ class GamemenuView extends StatelessWidget {
                                                                           true,
                                                                     );
                                                                     if (response) {
-                                                                      AppLists
-                                                                          .friendsList
-                                                                          .value!
-                                                                          .add(
-                                                                        AppLists
-                                                                            .friendsInvitationList
-                                                                            .value![index]
-                                                                            .invitor,
-                                                                      );
-
-                                                                      AppLists
-                                                                          .friendsList
-                                                                          .refresh();
+                                                                      ApiFunctions
+                                                                          .fetchfriends();
 
                                                                       AppLists
                                                                           .friendsInvitationList
@@ -752,92 +741,96 @@ class GamemenuView extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: TextField(
-                                    controller:
-                                        controller.searchuserController.value,
-                                    keyboardType: TextInputType.text,
-                                    maxLength: 64,
-                                    cursorColor: Colors.red,
-                                    decoration: InputDecoration(
-                                      counterText: "",
-                                      hintText: "Kullanıcı Adı",
+                          controller.hoveredfriends.value == !true
+                              ? SizedBox.shrink()
+                              : Row(
+                                  children: [
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: TextField(
+                                          controller: controller
+                                              .searchuserController.value,
+                                          keyboardType: TextInputType.text,
+                                          maxLength: 64,
+                                          cursorColor: Colors.red,
+                                          decoration: InputDecoration(
+                                            counterText: "",
+                                            hintText: "Kullanıcı Adı",
+                                          ),
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Material(
-                                color: Colors.transparent,
-                                child: IconButton(
-                                  style: IconButton.styleFrom(
-                                    backgroundColor: Colors.white38,
-                                  ),
-                                  onPressed: () async {
-                                    APIService api = APIService.instance;
+                                    Material(
+                                      color: Colors.transparent,
+                                      child: IconButton(
+                                        style: IconButton.styleFrom(
+                                          backgroundColor: Colors.white38,
+                                        ),
+                                        onPressed: () async {
+                                          APIService api = APIService.instance;
 
-                                    bool? response = await api.addfriend(
-                                      username: controller
-                                          .searchuserController.value.text,
-                                    );
-                                    if (!response) {
-                                      return;
-                                    }
-                                  },
-                                  icon: Icon(
-                                    Icons.add,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Expanded(
-                                flex: 1,
-                                child: Material(
-                                  color: Colors.transparent,
-                                  child: InkWell(
-                                    onTap: () {},
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Center(
-                                        child: Icon(
+                                          bool? response = await api.addfriend(
+                                            username: controller
+                                                .searchuserController
+                                                .value
+                                                .text,
+                                          );
+                                          if (!response) {
+                                            return;
+                                          }
+                                        },
+                                        icon: Icon(
                                           Icons.add,
                                           color: Colors.white,
                                         ),
                                       ),
                                     ),
-                                  ),
+                                  ],
                                 ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: Material(
-                                  color: Colors.transparent,
-                                  child: InkWell(
-                                    onTap: () {},
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Center(
-                                        child: Icon(
-                                          Icons.search,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                          // Row(
+                          //   children: [
+                          //     Expanded(
+                          //       flex: 1,
+                          //       child: Material(
+                          //         color: Colors.transparent,
+                          //         child: InkWell(
+                          //           onTap: () {},
+                          //           child: Padding(
+                          //             padding: const EdgeInsets.all(8.0),
+                          //             child: Center(
+                          //               child: Icon(
+                          //                 Icons.add,
+                          //                 color: Colors.white,
+                          //               ),
+                          //             ),
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     ),
+                          //     Expanded(
+                          //       flex: 1,
+                          //       child: Material(
+                          //         color: Colors.transparent,
+                          //         child: InkWell(
+                          //           onTap: () {},
+                          //           child: Padding(
+                          //             padding: const EdgeInsets.all(8.0),
+                          //             child: Center(
+                          //               child: Icon(
+                          //                 Icons.search,
+                          //                 color: Colors.white,
+                          //               ),
+                          //             ),
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
                         ],
                       ),
                     ),
@@ -1083,42 +1076,6 @@ class GamemenuView extends StatelessWidget {
                                           122, 255, 255, 255),
                                       title: Text(
                                         "AYARLAR",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Material(
-                                    color: Colors.transparent,
-                                    child: ListTile(
-                                      onTap: () {},
-                                      tileColor: const Color.fromARGB(
-                                          122, 255, 255, 255),
-                                      title: Text(
-                                        "OYUNCU DESTEK",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Material(
-                                    color: Colors.transparent,
-                                    child: ListTile(
-                                      onTap: () {},
-                                      tileColor: const Color.fromARGB(
-                                          122, 255, 255, 255),
-                                      title: Text(
-                                        "HAKKINDA",
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           color: Colors.white,

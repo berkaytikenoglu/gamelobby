@@ -8,7 +8,7 @@ class PlayView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(PlayController());
+    Get.put(PlayController());
 
     GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
@@ -17,11 +17,9 @@ class PlayView extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 180.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: 60),
-            Expanded(
-              child: UnratedView(),
-            ),
+            UnratedView(),
           ],
         ),
       ),

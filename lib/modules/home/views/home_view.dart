@@ -1,5 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:gamelobby/helper/applists.dart';
+import 'package:gamelobby/helper/consts.dart';
+import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeView extends StatelessWidget {
   final Function(int menuIndex, String menuName) function;
@@ -24,7 +30,7 @@ class HomeView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "WARS OF CIVIL",
+                    Consts.gameName,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 88,
@@ -36,7 +42,7 @@ class HomeView extends StatelessWidget {
                     width: 500,
                     child: Center(
                       child: Text(
-                        "CAPTURE : 1",
+                        "ERKEN ERİŞİM",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 44,
@@ -108,99 +114,368 @@ class HomeView extends StatelessWidget {
                                         child: Column(
                                           children: [
                                             InkWell(
-                                              onTap: () {},
-                                              child: Container(
-                                                width: 300,
-                                                height: 350,
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      color: Colors.white,
-                                                      width: 0.4),
-                                                  image: DecorationImage(
-                                                    fit: BoxFit.cover,
-                                                    image:
-                                                        CachedNetworkImageProvider(
-                                                      "https://blog.monsternotebook.com.tr/wp-content/uploads/Valorant-Gece-Pazari.jpg",
-                                                    ),
+                                              onTap: () async {
+                                                if (AppLists.newsList.value ==
+                                                    null) {
+                                                  return;
+                                                }
+
+                                                if (AppLists
+                                                    .newsList.value!.isEmpty) {
+                                                  return;
+                                                }
+                                                final Uri url = Uri.parse(
+                                                    "https://server.aramizdakioyuncu.com/spooky/newsDetail/${AppLists.newsList.value!.first.id}");
+                                                if (await canLaunchUrl(url)) {
+                                                  await launchUrl(url,
+                                                      mode: LaunchMode
+                                                          .externalApplication); // Tarayıcıda aç
+                                                } else {
+                                                  if (kDebugMode) {
+                                                    print("URL açılamıyor.");
+                                                  }
+                                                }
+                                              },
+                                              child: Obx(
+                                                () => Container(
+                                                  width: 300,
+                                                  height: 300,
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        color: Colors.white,
+                                                        width: 0.4),
+                                                    image: AppLists.newsList
+                                                                .value ==
+                                                            null
+                                                        ? null
+                                                        : AppLists.newsList
+                                                                .value!.isEmpty
+                                                            ? null
+                                                            : DecorationImage(
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                                image:
+                                                                    CachedNetworkImageProvider(
+                                                                  "http://185.93.68.107/api/Documents/cd071d3d-b85e-4a4e-bf89-f411297b89d5/${AppLists.newsList.value!.first.bannerId}",
+                                                                ),
+                                                              ),
                                                   ),
-                                                ),
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(
-                                                    8.0,
-                                                  ),
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.end,
-                                                    children: [
-                                                      Text(
-                                                        "GECE PAZARI",
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 25,
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        "14/02/25 /// 05/03/25",
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 10,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
+                                                  child:
+                                                      AppLists.newsList.value ==
+                                                              null
+                                                          ? Center(
+                                                              child:
+                                                                  CupertinoActivityIndicator(),
+                                                            )
+                                                          : AppLists
+                                                                  .newsList
+                                                                  .value!
+                                                                  .isEmpty
+                                                              ? Center(
+                                                                  child:
+                                                                      CupertinoActivityIndicator(),
+                                                                )
+                                                              : Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .bottomCenter,
+                                                                  child:
+                                                                      Container(
+                                                                    height: 50,
+                                                                    width: double
+                                                                        .infinity,
+                                                                    color: const Color
+                                                                        .fromARGB(
+                                                                        192,
+                                                                        10,
+                                                                        9,
+                                                                        65),
+                                                                    child:
+                                                                        Padding(
+                                                                      padding: const EdgeInsets
+                                                                          .all(
+                                                                          8.0),
+                                                                      child:
+                                                                          Obx(
+                                                                        () =>
+                                                                            Column(
+                                                                          children: [
+                                                                            Align(
+                                                                              alignment: Alignment.topLeft,
+                                                                              child: Text(
+                                                                                "HABER NOTU:",
+                                                                                style: TextStyle(
+                                                                                  color: Colors.white,
+                                                                                  fontWeight: FontWeight.bold,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                            Text(
+                                                                              AppLists.newsList.value!.first.title,
+                                                                              style: TextStyle(
+                                                                                color: Colors.white,
+                                                                                fontWeight: FontWeight.bold,
+                                                                                fontSize: 10,
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
                                                 ),
                                               ),
                                             ),
                                             SizedBox(height: 5),
                                             InkWell(
-                                              onTap: () {},
-                                              child: Container(
-                                                width: 300,
-                                                height: 180,
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      color: Colors.white,
-                                                      width: 0.4),
-                                                  image: DecorationImage(
-                                                    fit: BoxFit.cover,
-                                                    image:
-                                                        CachedNetworkImageProvider(
-                                                      "https://cmsassets.rgpub.io/sanity/images/dsfx7636/news_live/452d4b51b39911fc6ca97c997fb189b3bb27e800-1920x1080.jpg?auto=format&fit=fill&q=80&w=1082",
-                                                    ),
+                                              onTap: () async {
+                                                if (AppLists.updateList.value ==
+                                                    null) {
+                                                  return;
+                                                }
+
+                                                if (AppLists.updateList.value!
+                                                    .isEmpty) {
+                                                  return;
+                                                }
+                                                final Uri url = Uri.parse(
+                                                    "https://server.aramizdakioyuncu.com/spooky/UpdateDetail/${AppLists.updateList.value!.first.id}");
+                                                if (await canLaunchUrl(url)) {
+                                                  await launchUrl(url,
+                                                      mode: LaunchMode
+                                                          .externalApplication); // Tarayıcıda aç
+                                                } else {
+                                                  if (kDebugMode) {
+                                                    print("URL açılamıyor.");
+                                                  }
+                                                }
+                                              },
+                                              child: Obx(
+                                                () => Container(
+                                                  width: 300,
+                                                  height: 180,
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        color: Colors.white,
+                                                        width: 0.4),
+                                                    image: AppLists.updateList
+                                                                .value ==
+                                                            null
+                                                        ? null
+                                                        : AppLists.updateList
+                                                                .value!.isEmpty
+                                                            ? null
+                                                            : DecorationImage(
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                                image:
+                                                                    CachedNetworkImageProvider(
+                                                                  "http://185.93.68.107/api/Documents/cd071d3d-b85e-4a4e-bf89-f411297b89d5/${AppLists.updateList.value!.first.bannerId}",
+                                                                ),
+                                                              ),
                                                   ),
-                                                ),
-                                                child: Align(
-                                                  alignment:
-                                                      Alignment.bottomCenter,
-                                                  child: Container(
-                                                    height: 50,
-                                                    color: const Color.fromARGB(
-                                                        192, 10, 9, 65),
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8.0),
-                                                      child: Text(
-                                                        "VALORANT MASTERS BANGKOK FİNALİ BU HAFTA SONU",
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 10,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
+                                                  child:
+                                                      AppLists.updateList
+                                                                  .value ==
+                                                              null
+                                                          ? Center(
+                                                              child:
+                                                                  CupertinoActivityIndicator(),
+                                                            )
+                                                          : AppLists
+                                                                  .updateList
+                                                                  .value!
+                                                                  .isEmpty
+                                                              ? Center(
+                                                                  child:
+                                                                      CupertinoActivityIndicator(),
+                                                                )
+                                                              : Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .bottomCenter,
+                                                                  child:
+                                                                      Container(
+                                                                    height: 50,
+                                                                    width: double
+                                                                        .infinity,
+                                                                    color: const Color
+                                                                        .fromARGB(
+                                                                        192,
+                                                                        10,
+                                                                        9,
+                                                                        65),
+                                                                    child:
+                                                                        Padding(
+                                                                      padding: const EdgeInsets
+                                                                          .all(
+                                                                          8.0),
+                                                                      child:
+                                                                          Column(
+                                                                        children: [
+                                                                          Align(
+                                                                            alignment:
+                                                                                Alignment.topLeft,
+                                                                            child:
+                                                                                Text(
+                                                                              "GÜNCELLEME",
+                                                                              style: TextStyle(
+                                                                                color: Colors.white,
+                                                                                fontWeight: FontWeight.bold,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          Obx(
+                                                                            () =>
+                                                                                Text(
+                                                                              AppLists.updateList.value!.first.title,
+                                                                              style: TextStyle(
+                                                                                color: Colors.white,
+                                                                                fontWeight: FontWeight.bold,
+                                                                                fontSize: 10,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
                                                 ),
                                               ),
                                             ),
                                             SizedBox(height: 5),
                                             InkWell(
-                                              onTap: () {},
+                                              onTap: () async {
+                                                if (AppLists.newsList.value ==
+                                                    null) {
+                                                  return;
+                                                }
+
+                                                if (AppLists
+                                                    .newsList.value!.isEmpty) {
+                                                  return;
+                                                }
+                                                final Uri url = Uri.parse(
+                                                    "https://server.aramizdakioyuncu.com/spooky/EventDetail/${AppLists.newsList.value!.first.id}");
+                                                if (await canLaunchUrl(url)) {
+                                                  await launchUrl(url,
+                                                      mode: LaunchMode
+                                                          .externalApplication); // Tarayıcıda aç
+                                                } else {
+                                                  if (kDebugMode) {
+                                                    print("URL açılamıyor.");
+                                                  }
+                                                }
+                                              },
+                                              child: Container(
+                                                width: 300,
+                                                height: 250,
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: Colors.white,
+                                                      width: 0.4),
+                                                  image: AppLists.eventList
+                                                              .value ==
+                                                          null
+                                                      ? null
+                                                      : AppLists.eventList
+                                                              .value!.isEmpty
+                                                          ? null
+                                                          : DecorationImage(
+                                                              fit: BoxFit.cover,
+                                                              image:
+                                                                  CachedNetworkImageProvider(
+                                                                "http://185.93.68.107/api/Documents/cd071d3d-b85e-4a4e-bf89-f411297b89d5/${AppLists.eventList.value!.first.bannerId}",
+                                                              ),
+                                                            ),
+                                                ),
+                                                child: Obx(
+                                                  () =>
+                                                      AppLists.eventList
+                                                                  .value ==
+                                                              null
+                                                          ? Center(
+                                                              child:
+                                                                  CupertinoActivityIndicator(),
+                                                            )
+                                                          : AppLists
+                                                                  .eventList
+                                                                  .value!
+                                                                  .isEmpty
+                                                              ? Center(
+                                                                  child:
+                                                                      CupertinoActivityIndicator(),
+                                                                )
+                                                              : Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .bottomCenter,
+                                                                  child:
+                                                                      Container(
+                                                                    height: 100,
+                                                                    width: double
+                                                                        .infinity,
+                                                                    color: const Color
+                                                                        .fromARGB(
+                                                                        192,
+                                                                        10,
+                                                                        9,
+                                                                        65),
+                                                                    child:
+                                                                        Padding(
+                                                                      padding: const EdgeInsets
+                                                                          .all(
+                                                                          8.0),
+                                                                      child:
+                                                                          Column(
+                                                                        children: [
+                                                                          Align(
+                                                                            alignment:
+                                                                                Alignment.topLeft,
+                                                                            child:
+                                                                                Text(
+                                                                              "ETKİNLİK",
+                                                                              style: TextStyle(
+                                                                                color: Colors.white,
+                                                                                fontWeight: FontWeight.bold,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          Obx(
+                                                                            () =>
+                                                                                Text(
+                                                                              AppLists.eventList.value!.first.title,
+                                                                              style: TextStyle(
+                                                                                color: Colors.white,
+                                                                                fontWeight: FontWeight.bold,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(height: 5),
+                                            InkWell(
+                                              onTap: () async {
+                                                final Uri url = Uri.parse(
+                                                    "https://www.google.com");
+                                                if (await canLaunchUrl(url)) {
+                                                  await launchUrl(url,
+                                                      mode: LaunchMode
+                                                          .externalApplication); // Tarayıcıda aç
+                                                } else {
+                                                  if (kDebugMode) {
+                                                    print("URL açılamıyor.");
+                                                  }
+                                                }
+                                              },
                                               child: Container(
                                                 width: 300,
                                                 decoration: BoxDecoration(
@@ -218,56 +493,7 @@ class HomeView extends StatelessWidget {
                                                     child: Column(
                                                       children: [
                                                         Text(
-                                                          "YAMA  NOTLARI",
-                                                          style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          "10.03 > Güvenlik",
-                                                          style: TextStyle(
-                                                            color: Colors.white,
-                                                          ),
-                                                          textAlign:
-                                                              TextAlign.start,
-                                                        ),
-                                                        Text(
-                                                          "10.02 > Yanıt Verme Süresi",
-                                                          style: TextStyle(
-                                                            color: Colors.white,
-                                                          ),
-                                                          textAlign:
-                                                              TextAlign.start,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(height: 5),
-                                            InkWell(
-                                              onTap: () {},
-                                              child: Container(
-                                                width: 300,
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      color: Colors.white,
-                                                      width: 0.4),
-                                                ),
-                                                child: Container(
-                                                  color: const Color.fromARGB(
-                                                      192, 10, 9, 65),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: Column(
-                                                      children: [
-                                                        Text(
-                                                          "ÖNE ÇIKAN MODLAR",
+                                                          "ERKEN ERİŞİM",
                                                           style: TextStyle(
                                                             color: Colors.white,
                                                             fontWeight:
@@ -305,7 +531,7 @@ class HomeView extends StatelessWidget {
                                                               ),
                                                             ),
                                                             title: Text(
-                                                              "TAKIMLI ÖLÜM KALIM SAVAŞI",
+                                                              "CUMHURİYET ÜNİVERSİTESİ",
                                                               style: TextStyle(
                                                                 color: Colors
                                                                     .white,

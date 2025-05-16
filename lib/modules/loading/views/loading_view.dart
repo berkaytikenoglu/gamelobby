@@ -53,102 +53,147 @@ class LoadingView extends StatelessWidget {
                 ),
               ],
             ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                height: 200,
-                width: 100,
-                decoration: BoxDecoration(
-                  boxShadow: [BoxShadow(blurRadius: 100)],
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.black45,
-                      Colors.black,
-                      Colors.black,
-                      Colors.black,
-                    ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
-                  borderRadius: BorderRadiusDirectional.only(
-                    bottomEnd: Radius.circular(80),
-                    topEnd: Radius.circular(80),
-                  ),
-                ),
-                child: InkWell(
-                  onTap: () {
-                    if (controller.storyimageIndex > 0) {
-                      controller.storyimageIndex--;
-                    }
-                  },
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "Önceki",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Container(
-                height: 200,
-                width: 100,
-                decoration: BoxDecoration(
-                  boxShadow: [BoxShadow(blurRadius: 100)],
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.black45,
-                      Colors.black,
-                      Colors.black,
-                      Colors.black,
-                    ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
-                  borderRadius: BorderRadiusDirectional.only(
-                    bottomStart: Radius.circular(80),
-                    topStart: Radius.circular(80),
-                  ),
-                ),
-                child: InkWell(
-                  onTap: () {
-                    if (controller.storyimageIndex < 7) {
-                      controller.storyimageIndex++;
-                    }
-                  },
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "Sonraki",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            // Align(
+            //   alignment: Alignment.centerLeft,
+            //   child: Container(
+            //     height: 200,
+            //     width: 100,
+            //     decoration: BoxDecoration(
+            //       boxShadow: [BoxShadow(blurRadius: 100)],
+            //       gradient: LinearGradient(
+            //         colors: [
+            //           Colors.black45,
+            //           Colors.black,
+            //           Colors.black,
+            //           Colors.black,
+            //         ],
+            //         begin: Alignment.topCenter,
+            //         end: Alignment.bottomCenter,
+            //       ),
+            //       borderRadius: BorderRadiusDirectional.only(
+            //         bottomEnd: Radius.circular(80),
+            //         topEnd: Radius.circular(80),
+            //       ),
+            //     ),
+            //     child: InkWell(
+            //       onTap: () {
+            //         if (controller.storyimageIndex > 0) {
+            //           controller.storyimageIndex--;
+            //         }
+            //       },
+            //       child: Center(
+            //         child: Padding(
+            //           padding: const EdgeInsets.all(8.0),
+            //           child: Text(
+            //             "Önceki",
+            //             style: TextStyle(color: Colors.white),
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            // Align(
+            //   alignment: Alignment.centerRight,
+            //   child: Container(
+            //     height: 200,
+            //     width: 100,
+            //     decoration: BoxDecoration(
+            //       boxShadow: [BoxShadow(blurRadius: 100)],
+            //       gradient: LinearGradient(
+            //         colors: [
+            //           Colors.black45,
+            //           Colors.black,
+            //           Colors.black,
+            //           Colors.black,
+            //         ],
+            //         begin: Alignment.topCenter,
+            //         end: Alignment.bottomCenter,
+            //       ),
+            //       borderRadius: BorderRadiusDirectional.only(
+            //         bottomStart: Radius.circular(80),
+            //         topStart: Radius.circular(80),
+            //       ),
+            //     ),
+            //     child: InkWell(
+            //       onTap: () {
+            //         if (controller.storyimageIndex < 7) {
+            //           controller.storyimageIndex++;
+            //         }
+            //       },
+            //       child: Center(
+            //         child: Padding(
+            //           padding: const EdgeInsets.all(8.0),
+            //           child: Text(
+            //             "Sonraki",
+            //             style: TextStyle(color: Colors.white),
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
             Align(
               alignment: Alignment.bottomLeft,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      "Geçmek için",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    Image.asset(
-                      "assets/images/keyboard/space.png",
-                      height: 60,
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Image.asset(
+                              "assets/images/keyboard/space.png",
+                              height: 25,
+                            ),
+                            Text(
+                              "Atla",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(width: 20),
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Image.asset(
+                              "assets/images/keyboard/left.png",
+                              height: 25,
+                            ),
+                            Text(
+                              "Geri",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(width: 20),
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Image.asset(
+                              "assets/images/keyboard/right.png",
+                              height: 25,
+                            ),
+                            Text(
+                              "İleri",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -219,21 +264,14 @@ class LoadingView extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "Loading",
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontWeight: FontWeight.bold,
+                      child: Obx(
+                        () => Text(
+                          "${controller.storyimageIndex.value + 1}/${controller.storyimagelist.length}",
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ),
-                    SizedBox(width: 5),
-                    SizedBox(
-                      width: 25,
-                      height: 25,
-                      child: CircularProgressIndicator(
-                        color: Colors.red,
-                        strokeWidth: 5,
                       ),
                     ),
                   ],

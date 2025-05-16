@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:gamelobby/helper/models/api/contents.dart';
 import 'package:gamelobby/helper/models/api/friendinvitations.dart';
 import 'package:gamelobby/helper/models/api/friendsearch.dart';
 import 'package:gamelobby/helper/models/api/friendship.dart';
@@ -12,6 +13,12 @@ import 'package:get/get.dart';
 
 // ignore: constant_identifier_names
 enum RequestType { GET, POST, PUT, DELETE }
+
+enum NewsUpdateEventCategory {
+  event,
+  update,
+  news,
+}
 
 class APIService extends GetConnect {
   static final APIService instance = APIService._internal();
@@ -297,6 +304,49 @@ class APIService extends GetConnect {
     }
 
     return gameResponse;
+  }
+
+  ////////////////////HAERLER GÜNCELLEMELER ETKİNLİKLER////////////////////////
+  ///
+
+  Future<List<APIContents>?> newsupdateseventsFetch(
+      NewsUpdateEventCategory $category) async {
+    log($category.name[0].toUpperCase() +
+        $category.name.substring(1).toLowerCase());
+    Response<dynamic>? response = await apiRequest(
+      showLogs: true,
+      endpoint: "Contents/Search",
+      type: RequestType.GET,
+      queryParams: {
+        "Type": $category.name[0].toUpperCase() +
+            $category.name.substring(1).toLowerCase()
+      },
+    );
+
+    if (response == null) {
+      return null;
+    }
+
+    List<APIContents> contentsResponse = [];
+    if (response.body != null && response.isOk) {
+      try {
+        for (var element in response.body['data']) {
+          contentsResponse.add(
+            APIContents(
+              id: element['id'],
+              title: element['title'],
+              createdDate: element['createdDate'],
+              youtubeUrl: element['youtubeUrl'],
+              bannerId: element['bannerId'],
+            ),
+          );
+        }
+      } catch (e) {
+        log(e.toString());
+      }
+    }
+
+    return contentsResponse;
   }
 
   /////////////////Matches /////////////////

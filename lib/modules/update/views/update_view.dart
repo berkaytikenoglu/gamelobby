@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gamelobby/modules/update/controllers/update_controller.dart';
 import 'package:get/get.dart';
-import 'package:media_kit_video/media_kit_video.dart';
 import 'package:window_manager/window_manager.dart';
 
 class UpdateView extends StatelessWidget {
@@ -9,7 +8,7 @@ class UpdateView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(UpdateController());
+    Get.put(UpdateController());
     return Scaffold(
       body: Stack(
         children: [
@@ -17,38 +16,38 @@ class UpdateView extends StatelessWidget {
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-                // image: DecorationImage(
-                //   filterQuality: FilterQuality.high,
-                //   fit: BoxFit.cover,
-                //   image: AssetImage(
-                //     "assets/images/wallpapers/1.jpg",
-                //   ),
-                // ),
+              image: DecorationImage(
+                filterQuality: FilterQuality.high,
+                fit: BoxFit.cover,
+                image: AssetImage(
+                  "assets/images/wallpapers/1.png",
                 ),
-            child: Column(
-              children: [
-                Expanded(
-                  child: SizedBox(
-                    height: 500,
-                    child: Video(
-                      controls: (state) {
-                        //Controlleri sildim
-                        return SizedBox.shrink();
-                      },
-                      fit: BoxFit.cover,
-                      controller: controller.videoController,
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: LinearProgressIndicator(
-                    color: Colors.red,
-                    backgroundColor: Colors.red.withValues(alpha: 0.5),
-                  ),
-                ),
-              ],
+              ),
             ),
+            // child: Column(
+            //   children: [
+            //     Expanded(
+            //       child: SizedBox(
+            //         height: 500,
+            //         child: Video(
+            //           controls: (state) {
+            //             //Controlleri sildim
+            //             return SizedBox.shrink();
+            //           },
+            //           fit: BoxFit.cover,
+            //           controller: controller.videoController,
+            //         ),
+            //       ),
+            //     ),
+            //     Align(
+            //       alignment: Alignment.bottomCenter,
+            //       child: LinearProgressIndicator(
+            //         color: Colors.red,
+            //         backgroundColor: Colors.red.withValues(alpha: 0.5),
+            //       ),
+            //     ),
+            //   ],
+            // ),
           ),
           Positioned(
             left: 0,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gamelobby/helper/models/api/contents.dart';
 import 'package:gamelobby/helper/models/api/friendinvitations.dart';
 import 'package:gamelobby/helper/models/api/friendship.dart';
 import 'package:gamelobby/helper/models/app/game_model.dart';
@@ -19,6 +20,10 @@ class AppLists {
 
   static Rxn<List<APIFriendinvitations>> friendsInvitationList = Rxn();
   static Rxn<List<APIFriendinvitations>> lobbyInvitationList = Rxn();
+
+  static Rxn<List<APIContents>> newsList = Rxn();
+  static Rxn<List<APIContents>> updateList = Rxn();
+  static Rxn<List<APIContents>> eventList = Rxn();
 
   static List<String> backgroundImages = [
     "assets/images/wallpapers/1.png",

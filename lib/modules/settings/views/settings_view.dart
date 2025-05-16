@@ -23,7 +23,7 @@ class SettingsView extends StatelessWidget {
               0, 0, 0, 1, 0, // Alfa kanalını koru
             ]),
             child: Image.asset(
-              "assets/images/wallpapers/4.jpg",
+              "assets/images/wallpapers/4.png",
               filterQuality: FilterQuality.high,
               fit: BoxFit.cover,
               width: MediaQuery.of(context).size.width,

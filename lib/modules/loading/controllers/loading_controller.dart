@@ -36,6 +36,11 @@ class LoadingController extends GetxController {
     musicplayer.play(
       AssetSource("sounds/loading.wav"),
     );
+
+    // Dinleyici ekle - şarkı bitince tekrar çal
+    musicplayer.onPlayerComplete.listen((event) {
+      musicplayer.play(AssetSource("sounds/loading.wav"));
+    });
   }
 
   @override
@@ -47,6 +52,25 @@ class LoadingController extends GetxController {
   }
 
   bool _handleKeyEvent(KeyEvent event) {
+    if (event is KeyDownEvent &&
+        (event.logicalKey == LogicalKeyboardKey.arrowRight) &&
+        !isESC.value) {
+      if (storyimageIndex < storyimagelist.length - 1) {
+        storyimageIndex++;
+      }
+
+      return true;
+    }
+    if (event is KeyDownEvent &&
+        (event.logicalKey == LogicalKeyboardKey.arrowLeft) &&
+        !isESC.value) {
+      if (storyimageIndex > 0) {
+        storyimageIndex--;
+      }
+
+      return true;
+    }
+
     if (event is KeyDownEvent &&
         (event.logicalKey == LogicalKeyboardKey.escape ||
             event.logicalKey == LogicalKeyboardKey.space) &&

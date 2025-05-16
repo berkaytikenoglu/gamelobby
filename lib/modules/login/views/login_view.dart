@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gamelobby/helper/consts.dart';
 import 'package:gamelobby/modules/login/controllers/login_controller.dart';
@@ -128,14 +129,16 @@ class LoginView extends StatelessWidget {
                                 ),
                                 TextButton(
                                   onPressed: () async {
-                                    final Uri url =
-                                        Uri.parse("https://www.google.com");
+                                    final Uri url = Uri.parse(
+                                        "https://server.aramizdakioyuncu.com/spooky/addAccount");
                                     if (await canLaunchUrl(url)) {
                                       await launchUrl(url,
                                           mode: LaunchMode
                                               .externalApplication); // Tarayıcıda aç
                                     } else {
-                                      print("URL açılamıyor.");
+                                      if (kDebugMode) {
+                                        print("URL açılamıyor.");
+                                      }
                                     }
                                   },
                                   child: Text(

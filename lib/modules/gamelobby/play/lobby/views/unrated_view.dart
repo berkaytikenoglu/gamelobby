@@ -107,7 +107,7 @@ class UnratedView extends StatelessWidget {
                                                       const EdgeInsets.all(8.0),
                                                   child: Center(
                                                     child: Text(
-                                                      "READY",
+                                                      "HAZIR",
                                                       style: TextStyle(
                                                         color: Colors.white,
                                                       ),
@@ -167,7 +167,7 @@ class UnratedView extends StatelessWidget {
           ],
         ),
         Text(
-          "Unrated: Standart VALORANT gameplay, Swap between attacking and defending and defending sites. first to 13 rounds wins.",
+          "Unutma, hayaletler intikamını sessizce alır, bugün tam zamanı!",
           style: TextStyle(
             color: Colors.white,
           ),
@@ -189,7 +189,7 @@ class UnratedView extends StatelessWidget {
                   unratedcontroller.startTimer();
                   showDialog(
                     barrierDismissible: false,
-                    context: context,
+                    context: Get.context!,
                     builder: (context) {
                       return AlertDialog(
                         backgroundColor: Colors.grey.shade900,

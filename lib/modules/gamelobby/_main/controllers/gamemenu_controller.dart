@@ -60,6 +60,10 @@ class GameMenuController extends GetxController
     ApiFunctions.friendInvitationList();
     ApiFunctions.lobbyInvitations();
 
+    ApiFunctions.newsFetch();
+    ApiFunctions.eventsFetch();
+    ApiFunctions.updateFetch();
+
     // ApiFunctions
 
     musicController = AnimationController(

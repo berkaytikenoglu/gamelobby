@@ -6,6 +6,7 @@ import 'dart:math' as math;
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:gamelobby/helper/applists.dart';
+import 'package:gamelobby/helper/functions/api_functions.dart';
 import 'package:gamelobby/helper/functions/jwt.dart';
 import 'package:gamelobby/helper/models/api/friendanswer.dart';
 import 'package:gamelobby/helper/models/api/friendinvitations.dart';
@@ -339,15 +340,7 @@ class SignalRService {
           Friendanswer friendanswer = Friendanswer.fromJson(json);
 
           if (friendanswer.acceptState) {
-            AppLists.friendsList.value!.add(
-              APIFriendship(
-                id: friendanswer.invitedUser.userId,
-                username: friendanswer.invitedUser.username,
-                avatarId: friendanswer.invitedUser.avatarId,
-                isOnline: friendanswer.invitedUser.isOnline,
-              ),
-            );
-            AppLists.friendsList.refresh();
+            ApiFunctions.fetchfriends();
           }
         } catch (e) {
           // JSON çözme hatası durumunda logla
@@ -371,7 +364,17 @@ class SignalRService {
           AppLists.friendsList.value!.removeWhere(
             (element) => element.id == json['userId'],
           );
+
+          AppLists.onlinefriendsList.value!.removeWhere(
+            (element) => element.id == json['userId'],
+          );
+
+          AppLists.offlinefriendsList.value!.removeWhere(
+            (element) => element.id == json['userId'],
+          );
           AppLists.friendsList.refresh();
+          AppLists.onlinefriendsList.refresh();
+          AppLists.offlinefriendsList.refresh();
         } catch (e) {
           // JSON çözme hatası durumunda logla
           log("JSON çözme hatası: ${e.toString()}");

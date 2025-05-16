@@ -20,7 +20,7 @@ class Appbar {
             ),
           ),
           Text(
-            "BACK // ",
+            "GERİ // ",
             style: TextStyle(
               fontSize: 18,
               color: Colors.grey,

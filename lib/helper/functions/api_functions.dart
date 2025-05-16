@@ -4,6 +4,7 @@ import 'dart:math' as math;
 import 'package:gamelobby/helper/api/api_service.dart';
 import 'package:gamelobby/helper/applists.dart';
 import 'package:gamelobby/helper/functions/jwt.dart';
+import 'package:gamelobby/helper/models/api/contents.dart';
 import 'package:gamelobby/helper/models/api/friendinvitations.dart';
 import 'package:gamelobby/helper/models/api/friendship.dart';
 import 'package:gamelobby/helper/models/api/lobby/lobby_information.dart';
@@ -28,13 +29,23 @@ class ApiFunctions {
     AppLists.friendsList.value!.addAll(response);
     AppLists.friendsList.refresh();
 
-    AppLists.onlinefriendsList.value = [];
-    AppLists.onlinefriendsList.value!.addAll(response);
+    //Online
+    AppLists.onlinefriendsList.value = AppLists.friendsList.value!
+        .where(
+          (element) => element.isOnline == true,
+        )
+        .toList();
+
     AppLists.onlinefriendsList.refresh();
 
-    AppLists.offlinefriendsList.value = [];
-    AppLists.onlinefriendsList.value!.addAll(response);
-    AppLists.onlinefriendsList.refresh();
+    //Offline
+
+    AppLists.offlinefriendsList.value = AppLists.friendsList.value!
+        .where(
+          (element) => element.isOnline == false,
+        )
+        .toList();
+    AppLists.offlinefriendsList.refresh();
   }
 
   static friendInvitationList() async {
@@ -135,6 +146,60 @@ class ApiFunctions {
       );
     }
     AppLists.lobbyInvitationList.refresh();
+
+    log("--->$response");
+    return true;
+  }
+
+  static Future<bool> newsFetch() async {
+    APIService api = APIService.instance;
+
+    List<APIContents>? response =
+        await api.newsupdateseventsFetch(NewsUpdateEventCategory.news);
+    if (response == null) {
+      return false;
+    }
+    AppLists.newsList.value = [];
+    for (APIContents element in response) {
+      AppLists.newsList.value!.add(element);
+    }
+    AppLists.newsList.refresh();
+
+    log("--->$response");
+    return true;
+  }
+
+  static Future<bool> updateFetch() async {
+    APIService api = APIService.instance;
+
+    List<APIContents>? response =
+        await api.newsupdateseventsFetch(NewsUpdateEventCategory.update);
+    if (response == null) {
+      return false;
+    }
+    AppLists.updateList.value = [];
+    for (APIContents element in response) {
+      AppLists.updateList.value!.add(element);
+    }
+    AppLists.updateList.refresh();
+
+    log("--->$response");
+    return true;
+  }
+
+  static Future<bool> eventsFetch() async {
+    APIService api = APIService.instance;
+
+    List<APIContents>? response =
+        await api.newsupdateseventsFetch(NewsUpdateEventCategory.event);
+    if (response == null) {
+      return false;
+    }
+    AppLists.eventList.value = [];
+    for (APIContents element in response) {
+      AppLists.eventList.value!.add(element);
+    }
+    AppLists.eventList.refresh();
 
     log("--->$response");
     return true;

@@ -156,11 +156,10 @@ class LoginView extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Text("v1.0.0"),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          "BU UYGULAMA CUHURİYET ÜNİVERSİTESİ ÖĞRENCİLERİ TARAFINDAN GELİŞTİRİLMEYE ÇALIŞILMIŞTIR...",
+                          "BU UYGULAMA CUHURİYET ÜNİVERSİTESİ ÖĞRENCİLERİ TARAFINDAN GELİŞTİRİLMİŞTİR",
                           style: TextStyle(
                             color: Colors.grey,
                             wordSpacing: 2,
@@ -191,48 +190,6 @@ class LoginView extends StatelessWidget {
                         child: Container(
                           color: Colors.transparent,
                           height: MediaQuery.of(context).size.height,
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 0,
-                      top: 20,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.crisis_alert_rounded,
-                                color: Colors.amber,
-                              ),
-                              SizedBox(width: 5),
-                              Text(
-                                "Erken Erişim",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      right: 0,
-                      top: 20,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: IconButton(
-                          onPressed: () {},
-                          style: IconButton.styleFrom(
-                            backgroundColor: Colors.black26,
-                          ),
-                          icon: Icon(
-                            Icons.person,
-                            color: Colors.white,
-                          ),
                         ),
                       ),
                     ),

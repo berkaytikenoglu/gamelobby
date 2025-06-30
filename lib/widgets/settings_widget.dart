@@ -47,11 +47,11 @@ class SettingsWidget {
                       child: Row(
                         children: [
                           Icon(
-                            Icons.close,
-                            color: Colors.red,
+                            Icons.check,
+                            color: Colors.green,
                           ),
                           Text(
-                            "Doğrulanmadı",
+                            "Doğrulanmış",
                             style: TextStyle(
                               color: Colors.white,
                             ),
@@ -60,28 +60,28 @@ class SettingsWidget {
                       ),
                     ),
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        onTap: () {},
-                        child: Container(
-                          color: Colors.white12,
-                          height: 60,
-                          width: 100,
-                          child: Center(
-                            child: Text(
-                              "Bağla",
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  // Expanded(
+                  //   flex: 1,
+                  //   child: Material(
+                  //     color: Colors.transparent,
+                  //     child: InkWell(
+                  //       onTap: () {},
+                  //       child: Container(
+                  //         color: Colors.white12,
+                  //         height: 60,
+                  //         width: 100,
+                  //         child: Center(
+                  //           child: Text(
+                  //             "Bağla",
+                  //             style: TextStyle(
+                  //               color: Colors.white,
+                  //             ),
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -154,8 +154,9 @@ class SettingsWidget {
     );
   }
 
-  static Widget listtileslider(String title) {
-    Rx<double> sliderValue = Rx<double>(0.1);
+  static Widget listtileslider(String title,
+      {double value = 0.1, required Function(double val) onChanged}) {
+    Rx<double> sliderValue = Rx<double>(value);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 0.5),
       child: Container(
@@ -210,6 +211,7 @@ class SettingsWidget {
                             value: sliderValue.value,
                             onChanged: (value) {
                               sliderValue.value = value;
+                              onChanged(value);
                             },
                           ),
                         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gamelobby/modules/gamelobby/_main/controllers/gamelobby_controller.dart';
 import 'package:get/get.dart';
 
 class SettingsController extends GetxController
@@ -7,11 +8,12 @@ class SettingsController extends GetxController
   final FocusNode focusNode = FocusNode();
   late TabController tabController;
   var pageController = PageController(initialPage: 0).obs;
+  final gameMenuController = Get.find<GamelobbyController>();
 
   @override
   void onInit() {
     super.onInit();
-    tabController = TabController(length: 5, vsync: this);
+    tabController = TabController(length: 3, vsync: this);
 
     HardwareKeyboard.instance.addHandler(_handleKeyEvent);
   }

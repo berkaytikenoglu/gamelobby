@@ -14,20 +14,12 @@ dependencies:
   cupertino_icons: ^1.0.8
   get: ^4.7.2
 
-  # win32: ^5.11.0 # Windows Özel
   window_manager: ^0.4.3
   audioplayers: ^6.2.0
-
-  media_kit: ^1.1.11 # Primary package.
-  media_kit_video: ^1.2.5 # For video rendering.
-  media_kit_libs_video: ^1.0.5 # Native video dependencies.
-
+  flutter_cube: ^0.1.1
   signalr_netcore: ^1.4.1
-  record: ^5.2.1
 
-  # pcmtowave: ^0.0.1
   url_launcher: ^6.2.5
-
   cached_network_image: ^3.4.1
 dev_dependencies:
   flutter_test:
@@ -42,6 +34,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/banners/
+    - assets/images/character/
     - assets/images/logos/
     - assets/images/wallpapers/
     - assets/images/keyboard/
@@ -49,3 +42,8 @@ flutter:
     - assets/sounds/
     - assets/sounds/musics/
     - assets/videos/
+    - assets/obj/
+    - assets/obj/Ghost.obj
+    - assets/obj/Ghost.mtl
+    - assets/obj/Ghost2.obj
+    - assets/obj/Ghost2.mtl

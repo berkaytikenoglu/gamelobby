@@ -39,10 +39,10 @@ class HomeView extends StatelessWidget {
                   ),
                   Container(
                     color: Colors.purple.withValues(alpha: 0.5),
-                    width: 500,
+                    width: 530,
                     child: Center(
                       child: Text(
-                        "ERKEN ERİŞİM",
+                        "SEZON 1: KARANLIK YIL",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 44,
@@ -203,7 +203,7 @@ class HomeView extends StatelessWidget {
                                                                             Align(
                                                                               alignment: Alignment.topLeft,
                                                                               child: Text(
-                                                                                "HABER NOTU:",
+                                                                                "HABER NOTU",
                                                                                 style: TextStyle(
                                                                                   color: Colors.white,
                                                                                   fontWeight: FontWeight.bold,
@@ -449,7 +449,6 @@ class HomeView extends StatelessWidget {
                                                                               AppLists.eventList.value!.first.title,
                                                                               style: TextStyle(
                                                                                 color: Colors.white,
-                                                                                fontWeight: FontWeight.bold,
                                                                               ),
                                                                             ),
                                                                           ),
@@ -458,114 +457,6 @@ class HomeView extends StatelessWidget {
                                                                     ),
                                                                   ),
                                                                 ),
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(height: 5),
-                                            InkWell(
-                                              onTap: () async {
-                                                final Uri url = Uri.parse(
-                                                    "https://www.google.com");
-                                                if (await canLaunchUrl(url)) {
-                                                  await launchUrl(url,
-                                                      mode: LaunchMode
-                                                          .externalApplication); // Tarayıcıda aç
-                                                } else {
-                                                  if (kDebugMode) {
-                                                    print("URL açılamıyor.");
-                                                  }
-                                                }
-                                              },
-                                              child: Container(
-                                                width: 300,
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      color: Colors.white,
-                                                      width: 0.4),
-                                                ),
-                                                child: Container(
-                                                  color: const Color.fromARGB(
-                                                      192, 10, 9, 65),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: Column(
-                                                      children: [
-                                                        Text(
-                                                          "ERKEN ERİŞİM",
-                                                          style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                          ),
-                                                        ),
-                                                        Material(
-                                                          color: Colors
-                                                              .transparent,
-                                                          child: ListTile(
-                                                            onTap: () {},
-                                                            contentPadding:
-                                                                EdgeInsets.all(
-                                                                    0),
-                                                            minVerticalPadding:
-                                                                0,
-                                                            minTileHeight: 40,
-                                                            minLeadingWidth: 0,
-                                                            tileColor:
-                                                                const Color
-                                                                    .fromARGB(
-                                                                    92,
-                                                                    0,
-                                                                    0,
-                                                                    0),
-                                                            leading: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(8.0),
-                                                              child: Icon(
-                                                                Icons
-                                                                    .flag_circle,
-                                                                color: Colors
-                                                                    .amber,
-                                                              ),
-                                                            ),
-                                                            title: Text(
-                                                              "CUMHURİYET ÜNİVERSİTESİ",
-                                                              style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontSize: 10,
-                                                              ),
-                                                            ),
-                                                            trailing: Container(
-                                                              height: 40,
-                                                              width: 60,
-                                                              color: const Color
-                                                                  .fromARGB(104,
-                                                                  56, 55, 53),
-                                                              child: Center(
-                                                                child: Text(
-                                                                  "8-10 DK.",
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
                                                 ),
                                               ),
                                             ),

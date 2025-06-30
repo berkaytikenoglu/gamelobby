@@ -10,7 +10,7 @@ class LoadingView extends StatelessWidget {
     final controller = Get.put(LoadingController());
 
     return MouseRegion(
-      // cursor: SystemMouseCursors.none,
+      cursor: SystemMouseCursors.none,
       child: Scaffold(
         body: Stack(
           children: [
@@ -32,107 +32,37 @@ class LoadingView extends StatelessWidget {
                       stops: [0.0, 0.5, 1.0], // renklerin konumu (isteğe bağlı)
                     ),
                   ),
-                  // child: Obx(
-                  //   () => Image.asset(
-                  //     controller
-                  //         .storyimagelist[controller.storyimageIndex.value],
-                  //     fit: BoxFit.cover,
-                  //   ),
-                  // ),
                 ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  child: Obx(
-                    () => Image.asset(
-                      controller
-                          .storyimagelist[controller.storyimageIndex.value],
-                      fit: BoxFit.contain,
+                Obx(
+                  () => AnimatedSwitcher(
+                    duration: const Duration(seconds: 1), // Animasyon süresi
+                    transitionBuilder:
+                        (Widget child, Animation<double> animation) {
+                      // Geçiş animasyonu: fade in/out veya diğer geçiş türlerini burada ayarlayabilirsin
+                      return FadeTransition(
+                        opacity: animation,
+                        child: child,
+                      );
+                    },
+                    child: ColorFiltered(
+                      key: ValueKey<int>(controller.storyimageIndex.value),
+                      colorFilter: ColorFilter.mode(
+                        Colors.black.withValues(alpha: 0),
+                        BlendMode.darken,
+                      ),
+                      child: Image.asset(
+                        controller
+                            .storyimagelist[controller.storyimageIndex.value],
+                        filterQuality: FilterQuality.high,
+                        fit: BoxFit.contain,
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height,
+                      ),
                     ),
                   ),
                 ),
               ],
             ),
-            // Align(
-            //   alignment: Alignment.centerLeft,
-            //   child: Container(
-            //     height: 200,
-            //     width: 100,
-            //     decoration: BoxDecoration(
-            //       boxShadow: [BoxShadow(blurRadius: 100)],
-            //       gradient: LinearGradient(
-            //         colors: [
-            //           Colors.black45,
-            //           Colors.black,
-            //           Colors.black,
-            //           Colors.black,
-            //         ],
-            //         begin: Alignment.topCenter,
-            //         end: Alignment.bottomCenter,
-            //       ),
-            //       borderRadius: BorderRadiusDirectional.only(
-            //         bottomEnd: Radius.circular(80),
-            //         topEnd: Radius.circular(80),
-            //       ),
-            //     ),
-            //     child: InkWell(
-            //       onTap: () {
-            //         if (controller.storyimageIndex > 0) {
-            //           controller.storyimageIndex--;
-            //         }
-            //       },
-            //       child: Center(
-            //         child: Padding(
-            //           padding: const EdgeInsets.all(8.0),
-            //           child: Text(
-            //             "Önceki",
-            //             style: TextStyle(color: Colors.white),
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            // Align(
-            //   alignment: Alignment.centerRight,
-            //   child: Container(
-            //     height: 200,
-            //     width: 100,
-            //     decoration: BoxDecoration(
-            //       boxShadow: [BoxShadow(blurRadius: 100)],
-            //       gradient: LinearGradient(
-            //         colors: [
-            //           Colors.black45,
-            //           Colors.black,
-            //           Colors.black,
-            //           Colors.black,
-            //         ],
-            //         begin: Alignment.topCenter,
-            //         end: Alignment.bottomCenter,
-            //       ),
-            //       borderRadius: BorderRadiusDirectional.only(
-            //         bottomStart: Radius.circular(80),
-            //         topStart: Radius.circular(80),
-            //       ),
-            //     ),
-            //     child: InkWell(
-            //       onTap: () {
-            //         if (controller.storyimageIndex < 7) {
-            //           controller.storyimageIndex++;
-            //         }
-            //       },
-            //       child: Center(
-            //         child: Padding(
-            //           padding: const EdgeInsets.all(8.0),
-            //           child: Text(
-            //             "Sonraki",
-            //             style: TextStyle(color: Colors.white),
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
             Align(
               alignment: Alignment.bottomLeft,
               child: Padding(
@@ -199,62 +129,6 @@ class LoadingView extends StatelessWidget {
                 ),
               ),
             ),
-
-            // Align(
-            //   alignment: Alignment.bottomCenter,
-            //   child: Container(
-            //     decoration: BoxDecoration(
-            //       boxShadow: [BoxShadow(blurRadius: 100)],
-            //       gradient: LinearGradient(
-            //         colors: [
-            //           Colors.black45,
-            //           Colors.black,
-            //           Colors.black,
-            //           Colors.black,
-            //         ],
-            //         begin: Alignment.topCenter,
-            //         end: Alignment.bottomCenter,
-            //       ),
-            //       borderRadius: BorderRadiusDirectional.only(
-            //         topStart: Radius.circular(80),
-            //         topEnd: Radius.circular(80),
-            //       ),
-            //     ),
-            //     child: Padding(
-            //       padding: const EdgeInsets.all(8.0),
-            //       child: SizedBox(
-            //         width: 300,
-            //         child: ElevatedButton(
-            //           style: ElevatedButton.styleFrom(
-            //             shape: LinearBorder(),
-            //             backgroundColor: Colors.transparent,
-            //             shadowColor: Colors.black26,
-            //           ),
-            //           onPressed: () {},
-            //           child: Padding(
-            //             padding: const EdgeInsets.all(8.0),
-            //             child: Text(
-            //               "Geç",
-            //               style: TextStyle(fontSize: 38),
-            //             ),
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
-
-            // SizedBox(
-            //   width: MediaQuery.of(context).size.width,
-            //   height: MediaQuery.of(context).size.height,
-            //   child: Video(
-            //     controls: (state) {
-            //       return SizedBox.shrink();
-            //     },
-            //     fit: BoxFit.cover,
-            //     controller: controller.videoController,
-            //   ),
-            // ),
             Align(
               alignment: Alignment.bottomRight,
               child: Padding(
@@ -277,6 +151,24 @@ class LoadingView extends StatelessWidget {
                   ],
                 ),
               ),
+            ),
+            Obx(
+              () => (!controller.isgameStarting.value)
+                  ? SizedBox.shrink()
+                  : Container(
+                      color: Colors.black,
+                      child: Center(
+                        child: Text(
+                          "Oyun Başlıyor",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
             ),
           ],
         ),

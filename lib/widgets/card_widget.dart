@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gamelobby/helper/api/api_service.dart';
@@ -11,6 +14,19 @@ class CardWidget {
       required PlayController controller,
       double height = 450,
       Player? player}) {
+    var userping = 20.obs;
+    Timer.periodic(const Duration(seconds: 4), (timer) {
+      final random = Random();
+
+      if (random.nextDouble() < 0.2) {
+        // %20 ihtimal
+        userping.value = 50 + random.nextInt(60); // 50–60 arası
+      } else {
+        // %80 ihtimal
+        userping.value = 20 + random.nextInt(11); // 20–30 arası
+      }
+    });
+
     return Padding(
       padding: EdgeInsets.all(4),
       child: SizedBox(
@@ -23,28 +39,52 @@ class CardWidget {
               children: [
                 player == null
                     ? SizedBox.shrink()
-                    : InkWell(
-                        onTap: () {
-                          APIService api = APIService.instance;
+                    : player.lobbyowner
+                        ? SizedBox.shrink()
+                        : InkWell(
+                            onTap: () {
+                              APIService api = APIService.instance;
 
-                          api.lobbykick(userID: player.userid);
-                        },
-                        child: Text(
-                          "Kick",
+                              api.lobbykick(userID: player.userid);
+                            },
+                            child: Text(
+                              "At ",
+                              style: TextStyle(
+                                color: Colors.amber,
+                              ),
+                            ),
+                          ),
+                Spacer(),
+                player == null
+                    ? SizedBox.shrink()
+                    : Obx(
+                        () => Text(
+                          "${userping.value}ms",
                           style: TextStyle(
-                            color: Colors.amber,
+                            color: userping.value > 100
+                                ? Colors.red
+                                : userping.value > 80
+                                    ? Colors.orange
+                                    : Colors.greenAccent,
                           ),
                         ),
                       ),
-                Spacer(),
-                Text(
-                  "20",
-                  style: TextStyle(color: Colors.greenAccent),
-                ),
-                Icon(
-                  color: Colors.greenAccent,
-                  Icons.signal_cellular_alt_rounded,
-                )
+                player == null
+                    ? SizedBox.shrink()
+                    : Obx(
+                        () => Icon(
+                          color: userping.value > 100
+                              ? Colors.red
+                              : userping.value > 80
+                                  ? Colors.orange
+                                  : Colors.greenAccent,
+                          userping.value > 100
+                              ? Icons.signal_cellular_alt_1_bar_rounded
+                              : userping.value > 100
+                                  ? Icons.signal_cellular_alt_2_bar_rounded
+                                  : Icons.signal_cellular_alt_rounded,
+                        ),
+                      )
               ],
             ),
             Material(
@@ -69,7 +109,7 @@ class CardWidget {
                                       BlendMode.dstATop,
                                     ),
                                     image: AssetImage(
-                                      controller.gameplayers.value![0].banner,
+                                      player.banner,
                                     ),
                                     fit: BoxFit.cover,
                                   ),
@@ -94,7 +134,7 @@ class CardWidget {
                                             padding: const EdgeInsets.all(8.0),
                                             child: Center(
                                               child: Text(
-                                                "READY",
+                                                "HAZIR",
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                 ),
@@ -106,8 +146,7 @@ class CardWidget {
                                         Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Text(
-                                            controller
-                                                .gameplayers.value![0].username,
+                                            player.username,
                                             style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 18,

@@ -54,10 +54,11 @@ class PlayController extends GetxController
       gameplayers.value!.add(
         Player(
           userid: element.userId,
+          lobbyowner: element.userId == response.owner.userId,
           username: element.username,
           avatar:
               "http://185.93.68.107/api/Documents/cd071d3d-b85e-4a4e-bf89-f411297b89d5/${element.avatarId}",
-          banner: "assets/images/banners/${math.Random().nextInt(5) + 1}.jpg",
+          banner: "assets/images/banners/${math.Random().nextInt(5) + 1}.png",
         ),
       );
     }
@@ -270,11 +271,7 @@ class PlayController extends GetxController
           backgroundColor: Colors.grey.shade900,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          title: Center(
-            child: Row(
-              children: [Text(matchedSearchID)],
-            ),
-          ),
+          title: Text("Maç Bulundu"),
           content: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,

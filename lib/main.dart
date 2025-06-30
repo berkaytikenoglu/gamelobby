@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gamelobby/app.dart';
-import 'package:media_kit/media_kit.dart';
 import 'package:window_manager/window_manager.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //Video
-  MediaKit.ensureInitialized();
+
   //WindowsManager
   await windowManager.ensureInitialized();
 

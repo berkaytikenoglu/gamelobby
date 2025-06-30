@@ -1,4 +1,4 @@
-import 'package:gamelobby/modules/gamelobby/_main/gamemenu_module.dart';
+import 'package:gamelobby/modules/gamelobby/_main/gamelobby_module.dart';
 import 'package:gamelobby/modules/loading/loading_module.dart';
 import 'package:gamelobby/modules/login/login_module.dart';
 import 'package:gamelobby/modules/settings/settings_module.dart';
@@ -24,7 +24,7 @@ class AppPages {
     ...UpdateModule.routes,
     ...LoadingModule.routes,
     ...LoginModule.routes,
-    ...GamemenuModule.routes,
+    ...GamelobbyModule.routes,
     ...SettingsModule.routes,
   ];
 }

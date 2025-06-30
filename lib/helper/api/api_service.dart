@@ -9,6 +9,7 @@ import 'package:gamelobby/helper/models/api/friendship.dart';
 import 'package:gamelobby/helper/models/api/lobby/lobby_information.dart';
 import 'package:gamelobby/helper/models/api/lobby/lobby_invitation_list.dart';
 import 'package:gamelobby/helper/models/api/login.dart';
+import 'package:gamelobby/helper/models/signalr/matchstatistics_event.dart';
 import 'package:get/get.dart';
 
 // ignore: constant_identifier_names
@@ -40,6 +41,7 @@ class APIService extends GetConnect {
     Map<String, dynamic>? data,
     Map<String, dynamic>? queryParams,
     bool showLogs = false,
+    bool noresponseINFOSnackbar = false,
   }) async {
     final headers = {
       'Authorization': _token != null ? 'Bearer $_token' : '',
@@ -70,12 +72,15 @@ class APIService extends GetConnect {
       //Sunucudan Olumsuz Mesaj Döndür
 
       if (showLogs) {
-        log("GAMEINFO -> ${response.isOk} (${response.statusCode.toString()})");
-        log("GAMEINFO RESPONSE -> ${response.body.toString()}");
+        log("GAMEINFO ($endpoint) -> ${response.isOk} (${response.statusCode.toString()})");
+        log("GAMEINFO RESPONSE ($endpoint) -> ${response.body.toString()}");
       }
 
       if (!response.isOk) {
         try {
+          if (noresponseINFOSnackbar) {
+            return null;
+          }
           Get.snackbar(
             "Bilgi",
             backgroundColor: Colors.black,
@@ -350,6 +355,30 @@ class APIService extends GetConnect {
   }
 
   /////////////////Matches /////////////////
+  ///
+  Future<MatchStatisticsEvent?> matchStatistic(int matchID) async {
+    Response<dynamic>? response = await apiRequest(
+      showLogs: true,
+      endpoint: "MatchStatistics/ScoreTable/$matchID",
+      type: RequestType.GET,
+      data: {},
+    );
+
+    if (response == null) {
+      return null;
+    }
+    MatchStatisticsEvent? gameResponse;
+    if (response.body != null && response.isOk) {
+      try {
+        gameResponse = MatchStatisticsEvent.fromJson(response.body);
+      } catch (e) {
+        log(e.toString());
+      }
+    }
+
+    return gameResponse;
+  }
+
   Future<bool> matchStartSearch() async {
     Response<dynamic>? response = await apiRequest(
       showLogs: true,
@@ -440,27 +469,14 @@ class APIService extends GetConnect {
 
   Future<LobbyInformation?> lobbyinviteResponse(
       {required int invitationID, required bool answer}) async {
-    Response<dynamic>? response = await apiRequest(
-      showLogs: true,
-      endpoint: "Lobbies/Invite",
-      type: RequestType.PUT,
-      data: {"inviteToLobbyId": invitationID, "acceptState": answer},
-    );
+    await apiRequest(
+        showLogs: true,
+        endpoint: "Lobbies/Invite",
+        type: RequestType.PUT,
+        data: {"inviteToLobbyId": invitationID, "acceptState": answer},
+        noresponseINFOSnackbar: true);
 
-    if (response == null) {
-      return null;
-    }
-
-    LobbyInformation? gameResponse;
-    if (response.body != null && response.isOk) {
-      try {
-        gameResponse = LobbyInformation.fromJson(response.body);
-      } catch (e) {
-        log(e.toString());
-      }
-    }
-
-    return gameResponse;
+    return null;
   }
 
   Future<List<LobbyinvatitionInformation>?> lobbyinvitationList() async {

@@ -18,11 +18,15 @@ import 'package:gamelobby/helper/models/signalr/friendstatus_event.dart';
 import 'package:gamelobby/helper/models/signalr/invitetolobby_event.dart';
 import 'package:gamelobby/helper/models/signalr/userdto.dart';
 import 'package:gamelobby/models/player.dart';
-import 'package:gamelobby/modules/gamelobby/_main/controllers/gamemenu_controller.dart';
+import 'package:gamelobby/modules/gamelobby/_main/controllers/gamelobby_controller.dart';
 import 'package:gamelobby/modules/gamelobby/play/_main/controllers/play_controller.dart';
 import 'package:get/get.dart';
 import 'package:signalr_netcore/signalr_client.dart';
 import 'package:window_manager/window_manager.dart';
+
+class GameContex {
+  static ProcessResult? game;
+}
 
 class SignalRService {
   late HubConnection hubConnection;
@@ -144,6 +148,7 @@ class SignalRService {
             playcontroller.gameplayers.value!.add(
               Player(
                 userid: element.userId,
+                lobbyowner: element.userId == response.owner.userId,
                 username: element.username,
                 avatar:
                     "http://185.93.68.107/api/Documents/cd071d3d-b85e-4a4e-bf89-f411297b89d5/${element.avatarId}",
@@ -251,15 +256,16 @@ class SignalRService {
               log("Oyun zaten çalışıyor, tekrar başlatılmıyor.");
             } else {
               // Oyun çalışmıyorsa, başlat
-              final playercontroller = Get.put(GameMenuController());
+              final playercontroller = Get.put(GamelobbyController());
               playercontroller.player.value.pause();
 
               await windowManager.hide();
-              await Process.run(
+              GameContex.game = await Process.run(
                 'deneme\\My project.exe',
                 ['--param1', jsonString],
               );
 
+              /// Eğer oyun bitmeden kapatılırsa lobiyi aç
               await windowManager.show();
               playercontroller.player.value.resume();
             }

@@ -1,18 +1,20 @@
+import 'dart:developer';
+
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gamelobby/routes/app_pages.dart';
 import 'package:get/get.dart';
-import 'package:media_kit/media_kit.dart';
-import 'package:media_kit_video/media_kit_video.dart';
+// import 'package:media_kit/media_kit.dart';
+// import 'package:media_kit_video/media_kit_video.dart';
 
 class LoadingController extends GetxController {
   final FocusNode focusNode = FocusNode();
 
-  late final player = Player();
+  // late final player = Player();
   AudioPlayer musicplayer = AudioPlayer();
 
-  late final videoController = VideoController(player);
+  // late final videoController = VideoController(player);
 
   var storyimageIndex = 0.obs;
   var storyimagelist = [
@@ -26,12 +28,12 @@ class LoadingController extends GetxController {
     "assets/images/story/h8.png",
   ].obs;
   var isESC = false.obs;
+  var isgameStarting = false.obs;
 
   @override
   void onInit() {
     super.onInit();
     HardwareKeyboard.instance.addHandler(_handleKeyEvent);
-    // loadingexiting();
 
     musicplayer.play(
       AssetSource("sounds/loading.wav"),
@@ -46,16 +48,32 @@ class LoadingController extends GetxController {
   @override
   void onClose() {
     super.onClose();
-    player.dispose();
+    // player.dispose();
     musicplayer.dispose();
     HardwareKeyboard.instance.removeHandler(_handleKeyEvent);
+  }
+
+  void _delayedNavigation() async {
+    await Future.delayed(Duration(seconds: 1));
+    Get.offAndToNamed(AppRoutes.MENU);
   }
 
   bool _handleKeyEvent(KeyEvent event) {
     if (event is KeyDownEvent &&
         (event.logicalKey == LogicalKeyboardKey.arrowRight) &&
         !isESC.value) {
-      if (storyimageIndex < storyimagelist.length - 1) {
+      if (storyimageIndex.value == storyimagelist.length - 1) {
+        log("Oyun Başlıyor");
+        isgameStarting.value = true;
+
+        isESC.value = true;
+
+        _delayedNavigation();
+
+        return true;
+      }
+
+      if (storyimageIndex.value < storyimagelist.length - 1) {
         storyimageIndex++;
       }
 
@@ -81,16 +99,5 @@ class LoadingController extends GetxController {
       return true;
     }
     return false;
-  }
-
-  loadingexiting() async {
-    player.open(Media('asset:///assets/videos/intro.mp4'));
-
-    await Future.delayed(Duration(seconds: 30));
-
-    if (isESC.value) {
-      return;
-    }
-    Get.offAndToNamed(AppRoutes.MENU);
   }
 }

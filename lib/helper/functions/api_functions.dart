@@ -138,6 +138,7 @@ class ApiFunctions {
       playcontroller.gameplayers.value!.add(
         Player(
           userid: element.userId,
+          lobbyowner: element.userId == response.owner.userId,
           username: element.username,
           avatar:
               "http://185.93.68.107/api/Documents/cd071d3d-b85e-4a4e-bf89-f411297b89d5/${element.avatarId}",
